@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">EE408 Project</string>
+    <string name="this_shoe">This shoe \n $169.99</string>
+    <string name="that_shoe">That shoe \n $39.99</string>
+    <string name="the_shoe">The shoe \n $99.99</string>
+    <string name="those_shoes">Those shoes \n $44.99</string>
+    <string name="size">Size</string>
+    <string name="quantity">Quantity</string>
+    <string name="price">Price: $44.99</string>
+    <string name="addtocart">Add to Cart</string>
+    <string name="buynow">Buy Now</string>
+
+
+</resources>
