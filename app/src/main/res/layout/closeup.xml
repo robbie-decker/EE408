@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/price"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_marginStart="83dp"
@@ -86,7 +86,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buy"
         android:layout_width="185dp"
         android:layout_height="69dp"
         android:layout_marginEnd="22dp"
@@ -96,8 +96,22 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <SearchView
-        android:layout_width="409dp"
-        android:layout_height="125dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
+        android:id="@+id/searchView"
+        android:layout_width="411dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="52dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="116dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="158dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,8 @@
     <string name="price">Price: $44.99</string>
     <string name="addtocart">Add to Cart</string>
     <string name="buynow">Buy Now</string>
+    <string name = "checkout">Check Out</string>
+    <string name = "cart">This is your shopping cart</string>
 
 
 </resources>
