@@ -1,16 +1,20 @@
 package com.example.ee408project;
 
+import android.graphics.Bitmap;
+
 public class Item {
 
     String name, description, price, status;
+    private Bitmap image;
 
     public Item(){}
 
-    public Item(String name, String description, String price, String status) {
+    public Item(String name, String description, String price, String status, Bitmap image) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.status = status;
+        this.image = image;
     }
 
     public String getStatus() {
@@ -40,6 +44,8 @@ public class Item {
     public String getPrice() {
         return price;
     }
+
+    public Bitmap getImage(){ return image; }
 
     public void setPrice(String price) {
         this.price = price;

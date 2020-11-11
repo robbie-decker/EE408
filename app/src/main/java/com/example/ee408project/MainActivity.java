@@ -4,11 +4,15 @@ package com.example.ee408project;
 
         import android.content.Intent;
         import android.database.Cursor;
+        import android.graphics.Bitmap;
+        import android.graphics.BitmapFactory;
         import android.os.Bundle;
         import android.view.View;
         import android.widget.AdapterView;
+        import android.widget.Button;
         import android.widget.ListView;
         import android.widget.SimpleCursorAdapter;
+        import android.widget.Toast;
 
         import java.math.BigDecimal;
         import java.sql.SQLException;
@@ -22,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new StoreDatabase(this);
+        //dbHelper.deleteAllItems();
+        Bitmap thisshoe = BitmapFactory.decodeResource(getResources(), R.drawable.yeezy);
+        Bitmap that = BitmapFactory.decodeResource(getResources(), R.drawable.jordans);
+        Bitmap the = BitmapFactory.decodeResource(getResources(), R.drawable.heels);
+        Bitmap those = BitmapFactory.decodeResource(getResources(), R.drawable.vans);
         try {
             dbHelper.open();
         }
@@ -35,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         displayListView();
+        //dbHelper.deleteAllItems();
 
         int num = dbHelper.getCartItemsRowCount(1);
         int amount = dbHelper.getAmount();
@@ -47,13 +57,20 @@ public class MainActivity extends AppCompatActivity {
         else{
             priceVal = BigDecimal.valueOf(amount, 2);
         }
-
+        Button cart = (Button)findViewById(R.id.cart);
+        assert cart != null;
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
-    public void onClickListener(View view){
-        Intent nextScreen = new Intent(this, CloseUp.class);
-        startActivity(nextScreen);
-    }
+
     private void displayListView() {
         Cursor cursor = dbHelper.fetchAllItems("0"); // 0 is used to denote an item yet to be bought
 
@@ -86,16 +103,21 @@ public class MainActivity extends AppCompatActivity {
                 // Get the cursor, positioned to the corresponding row in the result set
                 Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
-                // Get the item attributes to be sent to details activity from this row in the database.
+                // Get the item attributes to be sent to CloseUp activity from this row in the database.
                 String name =  cursor.getString(cursor.getColumnIndexOrThrow("name"));
                 String description =  cursor.getString(cursor.getColumnIndexOrThrow("description"));
                 int price =  cursor.getInt(cursor.getColumnIndexOrThrow("price"));
                 int itemId =  cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+
+                //byte[] imageByteArray = cursor.getBlob(7);
+                //Bitmap image = BitmapFactory.decodeByteArray(imageByteArray,0, imageByteArray.length);
+
                 Intent intent = new Intent(MainActivity.this, CloseUp.class);
                 intent.putExtra("name", name);
                 intent.putExtra("description", description);
                 intent.putExtra("price", price);
                 intent.putExtra("_id", itemId);
+                //intent.putExtra("image" , image);
                 startActivity(intent);
 
             }

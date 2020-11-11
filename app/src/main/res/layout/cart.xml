@@ -7,53 +7,63 @@
     <RelativeLayout android:background="#e1e1e1"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         tools:ignore="MissingConstraints">
+
+
         <LinearLayout
             android:id="@+id/layout_total"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="13dp"
             android:padding="5dp"
             android:weightSum="2">
-            <TextView android:gravity="end"
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="TextView" />
+
+            <TextView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
                 android:text="Total : "
-                android:textSize="20dp">
-            </TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/tv_total"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="match_parent"
                 android:text="0 Rs"
-                android:textSize="20dp">
-            </TextView>
-        </LinearLayout>
+                android:textSize="20dp"></TextView>
 
+            <Button
+                android:id="@+id/btn_placeorder"
+                android:layout_width="208dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="0dp"
+                android:onClick="insertOrder"
+                android:text="Place Order"
+                android:textColor="@android:color/white">
+                <!--            android:theme="@style/Theme.MaterialButton"-->
+            </Button>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_cart"
-            android:layout_above="@+id/btn_placeorder"
-            android:layout_below="@+id/layout_total"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
-        </androidx.recyclerview.widget.RecyclerView>
-
-
-        <Button
-            android:id="@+id/btn_placeorder"
-            android:layout_gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_height="60dp"
             android:layout_width="match_parent"
-            android:onClick="insertOrder"
-            android:text="Place Order"
-            android:textColor="@android:color/white">
-<!--            android:theme="@style/Theme.MaterialButton"-->
-        </Button>
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layout_total"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="-1dp"
+            android:layout_marginBottom="1dp"></androidx.recyclerview.widget.RecyclerView>
+
 
     </RelativeLayout>
 

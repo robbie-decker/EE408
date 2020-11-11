@@ -6,26 +6,31 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import android.util.Log;
 
 import java.sql.SQLException;
 
 public class StoreDatabase{
+
     public static final String KEY_ID = "_id";
     public static final String KEY_NAME = "name";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_PRICE = "price";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_IMAGE = "image";
 
     private static final String TAG = "ShopDbAdapter";
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
 
-    private static final String DATABASE_NAME = "PhoenixShop";
+    private static final String DATABASE_NAME = "FeetLocker";
     private static final String SHOP_TABLE = "shop";
     private static final int DATABASE_VERSION = 1;
 
+
     private final Context mContext;
+
 
     private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS "
             + SHOP_TABLE + " (" +
@@ -33,7 +38,9 @@ public class StoreDatabase{
             KEY_NAME + " TEXT,"+
             KEY_DESCRIPTION + " TEXT," +
             KEY_PRICE + " INTEGER," +
-            KEY_STATUS + " TEXT" +");";
+            KEY_STATUS + " TEXT," +
+            KEY_IMAGE + " BLOB" + ");"; //5
+
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -45,6 +52,8 @@ public class StoreDatabase{
         public void onCreate(SQLiteDatabase db){
             Log.w(TAG, DATABASE_CREATE);
             db.execSQL(DATABASE_CREATE);
+
+
         }
 
         @Override
@@ -53,7 +62,6 @@ public class StoreDatabase{
             onCreate(db);
         }
     }
-
     public StoreDatabase(Context context){
         this.mContext = context;
     }
@@ -77,7 +85,10 @@ public class StoreDatabase{
         initialValues.put(KEY_DESCRIPTION, description);
         initialValues.put(KEY_PRICE, price);
         initialValues.put(KEY_STATUS, status);
-
+        //ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        image.compress(Bitmap.CompressFormat.PNG, 100, bos);
+//        byte[] bArray = bos.toByteArray();
+//        initialValues.put(KEY_IMAGE, bArray);
         return mDb.insert(SHOP_TABLE, null, initialValues);
     }
 
@@ -101,6 +112,17 @@ public class StoreDatabase{
         mDb.update(SHOP_TABLE, contentValues, "_id= ? ", new String[]{Integer.toString(id)});
         mDb.close();
         return true;
+    }
+
+    public int removeFromCart(Integer id, String val){
+        int value = 0;
+        mDb = mDbHelper.getWritableDatabase();
+        String remove = "SELECT * FROM " + SHOP_TABLE + " WHERE " + KEY_ID;
+        Cursor cursor = mDb.rawQuery(remove, null);
+        if(cursor.moveToFirst()){
+             value = mDb.delete(SHOP_TABLE, "_id= ?", null);
+        }
+        return value;
     }
 
     public int getTotalItemsCount() {
@@ -134,9 +156,9 @@ public class StoreDatabase{
 
     public void insertMyShopItems() {
         createItem("This shoe", "Comfortable shoes for walking around\n" , 6999, "0");
-        createItem("That shoe", "Athletic shoes for sports", 3999, "0");
-        createItem("The Shoe", "Heels for a night out", 9999, "0");
-        createItem("Those Shoes", "Cool looking white shoes", 4499, "0");
+        createItem("That shoe", "Athletic shoes for sports", 3999, "0" );
+        createItem("The Shoe", "Heels for a night out", 9999, "0" );
+        createItem("Those Shoes", "Cool looking white shoes", 4499, "0" );
 
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class CloseUp extends AppCompatActivity {
             TextView name = (TextView)findViewById(R.id.name);
             //TextView description = (TextView)findViewById(R.id.description);
             TextView price = (TextView)findViewById(R.id.price);
+            EditText quantity = (EditText)findViewById(R.id.quantity);
 
             assert name != null;
             name.setText(bundle.getString("name"));
@@ -40,9 +42,26 @@ public class CloseUp extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            Button button = (Button)findViewById(R.id.buy);
+            Button button = (Button)findViewById(R.id.addtocart);
             assert button != null;
             button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dbHelper.addToCart(bundle.getInt("_id"), "1")){
+                        Intent intent = new Intent(CloseUp.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(CloseUp.this, "Successfully added to shopping cart", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(CloseUp.this, "Oops! Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+            Button buy = (Button)findViewById(R.id.buy);
+            assert buy != null;
+            buy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (dbHelper.addToCart(bundle.getInt("_id"), "1")){

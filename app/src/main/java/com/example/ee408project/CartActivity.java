@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -55,6 +56,16 @@ public class CartActivity extends AppCompatActivity {
         totalAmount.setText("Total Amount: $"+priceVal);
 
         LinearLayout cart = (LinearLayout)findViewById(R.id.linearLayout);
+        Button checkout = (Button)findViewById(R.id.checkout);
+        assert checkout != null;
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this, CheckOut.class);
+                startActivity(intent);
+            }
+        });
+
         assert cart != null;
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
