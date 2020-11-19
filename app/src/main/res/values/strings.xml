@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EE408 Project</string>
+    <string name="app_name">Shoe Store</string>
     <string name="this_shoe">This shoe \n $169.99</string>
     <string name="that_shoe">That shoe \n $39.99</string>
     <string name="the_shoe">The shoe \n $99.99</string>

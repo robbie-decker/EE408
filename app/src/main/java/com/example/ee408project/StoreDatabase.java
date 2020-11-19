@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 
 public class StoreDatabase{
@@ -39,7 +42,8 @@ public class StoreDatabase{
             KEY_DESCRIPTION + " TEXT," +
             KEY_PRICE + " INTEGER," +
             KEY_STATUS + " TEXT," +
-            KEY_IMAGE + " BLOB" + ");"; //5
+            KEY_IMAGE + " BLOB" + ");";//5
+
 
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -64,6 +68,8 @@ public class StoreDatabase{
     }
     public StoreDatabase(Context context){
         this.mContext = context;
+
+
     }
 
     public StoreDatabase open() throws SQLException {
@@ -78,22 +84,21 @@ public class StoreDatabase{
         }
     }
 
-    public long createItem(String name, String description, int price, String status) {
-
+    public long createItem(String name, String description, int price, String status, Bitmap image) {
+        //mDb = mDbHelper.getWritableDatabase();
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NAME, name);
         initialValues.put(KEY_DESCRIPTION, description);
         initialValues.put(KEY_PRICE, price);
         initialValues.put(KEY_STATUS, status);
-        //ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//        image.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//        byte[] bArray = bos.toByteArray();
-//        initialValues.put(KEY_IMAGE, bArray);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        byte[] bArray = bos.toByteArray();
+        initialValues.put(KEY_IMAGE, bArray);
         return mDb.insert(SHOP_TABLE, null, initialValues);
     }
 
     public boolean deleteAllItems() {
-
         int doneDelete = 0;
         doneDelete = mDb.delete(SHOP_TABLE, null , null);
         Log.w(TAG, Integer.toString(doneDelete));
@@ -145,20 +150,26 @@ public class StoreDatabase{
     }
 
     public Cursor fetchAllItems(String status) {
-
-        Cursor mCursor = mDb.query(SHOP_TABLE, new String[] {KEY_ID, KEY_NAME, KEY_DESCRIPTION, KEY_PRICE, KEY_STATUS},
+        Cursor mCursor = mDb.query(SHOP_TABLE, new String[] {KEY_ID, KEY_NAME, KEY_DESCRIPTION, KEY_PRICE, KEY_STATUS, KEY_IMAGE},
                 KEY_STATUS + " like '%" + status + "%'",null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
         return mCursor;
     }
+    public long insertImage(byte[] image) throws SQLiteException {
+        //mDb = mDbHelper.getWritableDatabase();
 
-    public void insertMyShopItems() {
-        createItem("This shoe", "Comfortable shoes for walking around\n" , 6999, "0");
-        createItem("That shoe", "Athletic shoes for sports", 3999, "0" );
-        createItem("The Shoe", "Heels for a night out", 9999, "0" );
-        createItem("Those Shoes", "Cool looking white shoes", 4499, "0" );
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_IMAGE, image);
+        long message = mDb.insert(SHOP_TABLE, null, cv);
 
+        Log.v("------------------------Hello","message" + message);
+        return message;
     }
+
+//    public int insertMyShopItems() {
+//        int x =
+//        return x;
+//    }
 }

@@ -9,6 +9,12 @@
     android:paddingTop="16dp"
     tools:context="com.example.ee408project.CartActivity">
 
+    <Button
+        android:id="@+id/clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Cart" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
